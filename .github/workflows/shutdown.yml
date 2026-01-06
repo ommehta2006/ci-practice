@@ -1,0 +1,22 @@
+name: Parent Shutdown Command
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Write shutdown command
+        run: echo shutdown > command.txt
+
+      - name: Commit and push
+        run: |
+          git config user.name "parent-control"
+          git config user.email "parent@control"
+          git add command.txt
+          git commit -m "Parent issued shutdown command"
+          git push
